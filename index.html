@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GGongmodoro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div id="timer-container">
+            <div id="gauge-container">
+                <div id="gauge"></div>
+            </div>
+            <div class="time-display">
+                <div id="main-timer">25:00</div>
+                <div id="sub-timer">05:00</div>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="start-stop" title="시작/정지"><i class="fas fa-play"></i></button>
+            <button id="reset" title="초기화"><i class="fas fa-sync-alt"></i></button>
+            <button id="setting" title=" 설정"><i class="fas fa-cog"></i></button>
+        </div>
+
+        <div id="setting-modal">
+            <div id="time-setting">
+                <div id="apply-wrapper">
+                    <span class="setting-type">시간 설정</span>
+                    <button id="apply"><i class="fas fa-check"></i></button>
+                </div>
+                <label>집중 <input type="number" id="work-input" value="25"></label>
+                <label>휴식 <input type="number" id="rest-input" value="5"></label>
+            </div>
+            <div id="setting-items"> 
+                <div id="theme-wrapper"> <!-- 테마 설정 -->
+                    <span class="setting-type">테마 설정</span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle-check">
+                        <span class="slider" id="theme-toggle"> <!-- class="slider" -->
+                            <i class="fas fa-sun icon-on"></i>
+                            <i class="fas fa-moon icon-off"></i>
+                        </span>
+                    </label>
+                </div>
+                <span class="setting-type">기록창 ON | OFF</span>
+                <div id="session-toggle"> <!-- 세션 토글 -->
+                    <label class="switch">
+                        <input type="checkbox" id="session-visible-check">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <span class="setting-type">음량 설정</span>
+                <div id="volume-container"> <!-- 음량 조절 -->
+                    <i class="fas fa-volume-up volume-icon"></i>
+                    <input type="range" id="volume-control" min="0" max="1" step="0.1" value="0.5">
+                </div>
+                <div id="ok-wrapper">
+                    <button id="okbtn"><i class="fas fa-angle-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="session-wrapper">
+            <div id="session-title" class="session-items">오늘 기록
+                <button id="reset-count" title="카운트 초기화"><i class="fas fa-undo"></i></button>
+            </div>
+            <div class="session-items">
+                집중: <span id="count">0</span>회
+            </div>
+            <div id="total-study-wrapper" class="session-items">
+                총 공부시간: <span id="total-study-time">00:00:00</span>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

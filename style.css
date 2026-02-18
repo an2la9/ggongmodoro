@@ -1,0 +1,368 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color:#000000;
+    --inner-circle-color: #ffffff;
+    --border-color: #ebedee;
+    --re-bg-color: #232528;
+    
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button {
+    border: none;
+}
+/* 다크모드 */
+body.theme-toggle {
+    --bg-color: #232528;
+    --text-color:#ecf0f1;
+    --inner-circle-color: #232528;
+    --border-color: #3f4144;
+    --re-bg-color: #ffffff;
+}
+
+.container {
+    height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* 게이지 */
+/* #gauge-container {
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: orange; 
+    position: relative;
+    overflow: hidden;
+    max-width: 90vw;
+} */
+/* 안쪽 원 */
+/* #gauge-container::after {
+    content: "";
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 85%;
+    border-radius:  50%;
+    background-color: var(--inner-circle-color);
+    color: var(--text-color);
+} */
+
+
+/* 시간 칸 */
+.time-display {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+}
+
+#main-timer {
+    font-size: 11rem;
+}
+
+#sub-timer {
+    font-size: 2rem;
+}
+
+/* 버튼 설정 */
+.controls {
+    position: fixed;
+    bottom: 10%;
+    right: 8%;
+
+    flex-direction: column;
+    display: flex;
+    gap: 15px;
+    z-index: 3000;
+}
+
+.controls button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: var(--re-bg-color);
+    background-color: var(--bg-color);
+    cursor: pointer;
+    font-size: 1rem;
+}
+button:hover {
+    filter: brightness(0.9); /* 살짝 어둡게 */
+    transform: scale(1.05); /* 살짝 크게 */
+    transition: 0.2s;
+}
+
+#reset-count:active {
+    transform: scale(0.95);
+}
+
+/* 설정 창 */
+#setting-modal {
+    display: none;
+    position: absolute;
+    align-items: center;
+    z-index: 100;
+    bottom: 10%;
+    right: 13%;
+    width: 200px;
+
+    font-size: 1.1rem;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 15px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#setting-modal input[type="number"] {
+    width: 2.3rem;
+    height: 1.5rem;
+    padding: 2px 5px;
+    border: 1px solid var(--re-bg-color);
+    background: transparent;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
+
+    margin-left: 10px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#theme-toggle, #session-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* 시간 설정칸 */
+#time-setting label {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.setting-type {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+/*  버튼 */
+#apply-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#apply, #okbtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--re-bg-color);
+    background-color: var(--bg-color);
+    cursor: pointer;
+    font-size: 1rem;
+
+    padding: 0;
+    line-height: normal;
+}
+
+/* 테마설정 */
+.theme-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#setting-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    align-items: flex-start;
+    
+}
+#setting-modal label {
+    display: block;
+}
+
+/* 스위치 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 슬라이더 */
+.slider {
+    top: 0; left: 0; right: 0; bottom: 0;
+    position: absolute;
+    cursor: pointer;
+    background-color: var(--re-bg-color);
+    transition:  .4s;
+    border-radius: 34px;
+}
+
+.slider i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    transition: 0.3s;
+    z-index: 1;
+}
+
+.icon-on {
+    left: 7px; 
+    color: #f1c40f;
+    opacity: 0;
+}
+.icon-off {
+    right: 7px; 
+    color: #f1c40f;
+    opacity: 1;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    transition: .4s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input:not(:checked) + .slider .icon-on { opacity: 0; }
+input:not(:checked) + .slider .icon-off { opacity: 1; }
+
+input:checked + .slider .icon-on { opacity: 1; }
+input:checked + .slider .icon-off { opacity: 0; }
+
+input:checked + .slider::before {
+    transform: translateX(26px);
+}
+
+#theme-toggle {
+    display: flex;
+}
+
+/* 음량 조절 */
+#volume-container {
+    display: flex; 
+    padding: 5px;
+    gap: 5px;
+}
+#volume-container i {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/* 세션 탭 */
+.session-wrapper {
+    z-index: 1000;
+    position: absolute;
+    bottom: 10%;
+    right: 32%;
+
+    width: 180px;
+    text-align: start;
+    font-size: 1.1rem;
+    /* background-color: var(--bg-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1); */
+    color: var(--text-color);
+}
+.session-wrapper.hidden {
+    display: none;
+}
+
+#session-title {
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+    
+}
+.session-items {
+    margin-bottom: 5px;
+    padding: 5px;
+    gap: 5px;
+    flex-direction: column;
+}
+
+/* 초기화 버튼 */
+#reset-count { 
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* 번인방지 */
+@keyframes burnInPrevention {
+    0%   { transform: translate(0, 0); opacity: 1.0; }
+    25%  { transform: translate(2px, 2px); opacity: 0.9; }
+    50%  { transform: translate(-2px, 1px); opacity: 0.8; }
+    75%  { transform: translate(1px, -2px); opacity: 0.9; }
+    100% { transform: translate(0, 0); opacity: 1.0; }
+}
+
+.prevent-burn-in {
+    animation: burnInPrevention 10s infinite linear;
+}
