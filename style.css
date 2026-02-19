@@ -354,7 +354,7 @@ input:checked + .slider::before {
     font-size: 1rem;
 }
 
-/* 번인방지 */
+/* 번인방지
 @keyframes burnInPrevention {
     0%   { transform: translate(0, 0); opacity: 1.0; }
     25%  { transform: translate(2px, 2px); opacity: 0.9; }
@@ -365,4 +365,4 @@ input:checked + .slider::before {
 
 .prevent-burn-in {
     animation: burnInPrevention 10s infinite linear;
-}
+} */
