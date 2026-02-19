@@ -205,7 +205,7 @@ function updateSubTimer() {
 
 // 타이머 시작 함수
 function startTimer() {
-    document.getElementById('timer-container').classList.add('prevent-burn-in');
+    // document.getElementById('timer-container').classList.add('prevent-burn-in');
     if (timerId !== null || workTime === 0) return;
     document.activeElement.blur();
 
@@ -240,7 +240,7 @@ function startTimer() {
 
 function stopTimer() {
     document.activeElement.blur();
-    document.getElementById('timer-container').classList.remove('prevent-burn-in');
+    // document.getElementById('timer-container').classList.remove('prevent-burn-in');
 
     if (timerId === null) return;
 
