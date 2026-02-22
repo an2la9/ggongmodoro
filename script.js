@@ -219,13 +219,13 @@ function startTimer() {
             localStorage.setItem('totalStudyTime', totalStudyTime);
         }
 
-        let progress = (remainingTime/totalTime) * 100;
+        // let progress = (remainingTime/totalTime) * 100;
 
-        if (isWorking) {
-            gauge.style.background = `conic-gradient(${workColor} 0% ${progress}%, lightgray ${progress}% 100%)`;
-        } else {
-            gauge.style.background = `conic-gradient(${restColor} 0% ${progress}%, lightgray ${progress}% 100%)`;
-        }
+        // if (isWorking) {
+        //     gauge.style.background = `conic-gradient(${workColor} 0% ${progress}%, lightgray ${progress}% 100%)`;
+        // } else {
+        //     gauge.style.background = `conic-gradient(${restColor} 0% ${progress}%, lightgray ${progress}% 100%)`;
+        // }
 
         updateDisplay();
 
@@ -266,9 +266,11 @@ function resetTimer() {
     stopTimer();
 
     remainingTime = totalTime;
+    if (isWorking !== true) {
+        switchMode();
+    }
     updateDisplay();
     updateSubTimer();
-
     gauge.style.background = `conic-gradient(${workColor} 0% 100%, lightgray 100% 100%)`;
     startStopBtn.innerHTML = `<i class="fas fa-play"></i>`;
 }
