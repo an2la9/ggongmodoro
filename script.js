@@ -1,14 +1,9 @@
 const mainTimer =  document.getElementById('main-timer');
 const subTimer =  document.getElementById('sub-timer');
 const startStopBtn =  document.getElementById('start-stop');
-const resetBtn = document.getElementById('reset');
-// const gauge = document.getElementById('gauge-container');
-const themeBtn = document.getElementById('theme-toggle');
+const resetBtn = document.getElementById('reset'); //타이머초기화
 // 알람소리
 const alarmSound = new Audio('alarm.mp3');
-// 페이지 로드시 저장된 테마 확인
-const savedTheme = localStorage.getItem('theme'); 
-const savedSseionCheck = localStorage.getItem('session');
 
 // 시간 설정
 const workInput = document.getElementById('work-input');
@@ -31,13 +26,6 @@ let timerId = null;
 const sessionCheck = document.getElementById('session-visible-check');
 const sessionShow = document.querySelector('.session-wrapper');
 
-// 페이지 로드시 저장된 테마 확인/세션
-if (savedTheme === 'dark') {
-    document.body.classList.add('theme-toggle');
-}
-if (savedSseionCheck === 'show') {
-    sessionShow.classList.remove('hidden');
-}
 
 updateDisplay();
 updateSubTimer();
@@ -59,26 +47,29 @@ function updateTotalStudyDisplay() {
 }
 
 // 횟수 카운트
-const countDisplay = document.getElementById('count'); 
-let saveCount = localStorage.getItem('sessionCount');
-let sessionCount = (saveCount && !isNaN(saveCount)) ? Number(saveCount) : 0;
+// const countDisplay = document.getElementById('count'); 
+// let saveCount = localStorage.getItem('sessionCount');
+// let sessionCount = (saveCount && !isNaN(saveCount)) ? Number(saveCount) : 0;
 
-countDisplay.innerText = sessionCount;
+// countDisplay.innerText = sessionCount;
 
 //기록 초기화
 const resetCountBtn = document.getElementById('reset-count');
 
-resetCountBtn.addEventListener('click', () => {
+function resetCount() {
     if (confirm("현재 기록을 초기화 할까요?")) {
-        sessionCount = 0;
-        countDisplay.innerText = sessionCount;
-        localStorage.setItem('sessionCount',0);
+        // sessionCount = 0;
+        // countDisplay.innerText = sessionCount;
+        // localStorage.setItem('sessionCount',0);
 
         totalStudyTime = 0;
         localStorage.setItem('totalStudyTime',0);
 
         updateTotalStudyDisplay();
     }
+}
+resetCountBtn.addEventListener('click', () => {
+    resetCount();
 });
 
 // 음량 조절
@@ -144,36 +135,10 @@ function formatTime(num) {
     
     const formattedMinutes = String(minutes).padStart(2,'0');
     const formattedSeconds = String(seconds).padStart(2, '0');
-    return `${formattedMinutes}:${formattedSeconds}`;
-    
+    return `${formattedMinutes}:${formattedSeconds}`;    
 }
-
-// 테마 전환
-const themeCheck = document.getElementById('theme-toggle-check');
-
-if (savedTheme === 'dark') {
-    themeCheck.checked = true;
-    document.body.classList.add('theme-toggle');
-}
-
-themeCheck.addEventListener('change', () => {
-    const isNowDark = themeCheck.checked;
-
-    if (isNowDark) {
-        document.body.classList.toggle('theme-toggle');
-        localStorage.setItem('theme', 'dark');
-    } else {
-        document.body.classList.remove('theme-toggle');
-        localStorage.setItem('theme', 'light');
-    }
-});
 
 // 세션 창
-
-if (savedSseionCheck === 'hidden') {
-    sessionCheck.checked = true;
-    sessionShow.classList.add('hidden');
-}
 
 sessionCheck.addEventListener('change', () => {
     const isNowVisible = sessionCheck.checked;
@@ -312,7 +277,8 @@ function switchMode() {
 
 
 // 설정
-settingBtn.addEventListener('click', (e) => {
+
+function settingModalOpen() {
     let settingModal = document.getElementById('setting-modal');
     
     if (settingModal.style.display === 'block') {
@@ -320,7 +286,11 @@ settingBtn.addEventListener('click', (e) => {
     } else {
         settingModal.style.display = 'block';
     }
-    e.stopPropagation()
+}
+
+settingBtn.addEventListener('click', (e) => {
+    settingModalOpen();
+    e.stopPropagation();
 });
 
 applyBtn.addEventListener('click', () => {
@@ -343,8 +313,8 @@ applyBtn.addEventListener('click', () => {
 });
 
 // 확인버튼
-const okBtn = document.getElementById('okbtn');
-okBtn.addEventListener('click', ()=>{    
+const closeBtn = document.getElementById('closebtn');
+closeBtn.addEventListener('click', ()=>{    
     document.getElementById('setting-modal').style.display = 'none';
 });
 
@@ -356,18 +326,48 @@ window.addEventListener('click', (e) => {
     }
 });
 
-window.addEventListener('keydown', (event) => {
-    if (event.code === 'Space') {
+// 단축키 
+
+// 스페이스바 (시작/정지)
+window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
         // 인풋에서 작동방지
-        if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
             return;
         }
-        event.preventDefault();
-
+        e.preventDefault(); // 브라우저 기본 저장 기능 막기
+        e.stopPropagation(); // 이벤트 전파 중단하기
+        
         if (timerId === null) {
             startTimer();
+            startStopBtn.innerHTML = `<i class="fas fa-pause"></i>`;
         } else {
             stopTimer();
+            startStopBtn.innerHTML = `<i class="fas fa-play"></i>`;
         }
     }
+});
+
+// ctrl + f (설정창 열기)
+window.addEventListener('keydown', (e) => {    
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {    
+        e.preventDefault();
+        settingModalOpen();
+    }     
+});
+
+// ctrl + r (타임머 초기화)
+window.addEventListener('keydown', (e) => {    
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r') {    
+        e.preventDefault();
+        resetTimer();
+    }     
+});
+
+// ctrl + e (기록 초기화)
+window.addEventListener('keydown', (e) => {    
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'e') {    
+        e.preventDefault();
+        resetCount();
+    }     
 });
