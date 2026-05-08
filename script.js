@@ -46,13 +46,6 @@ function updateTotalStudyDisplay() {
     totalStudyDisplay.innerText = result;
 }
 
-// 횟수 카운트
-// const countDisplay = document.getElementById('count'); 
-// let saveCount = localStorage.getItem('sessionCount');
-// let sessionCount = (saveCount && !isNaN(saveCount)) ? Number(saveCount) : 0;
-
-// countDisplay.innerText = sessionCount;
-
 //기록 초기화
 const resetCountBtn = document.getElementById('reset-count');
 
@@ -246,14 +239,7 @@ resetBtn.addEventListener('click', () => {
 })
 
 // 모드 전환
-function switchMode() {
-    if (isWorking === true) {
-        sessionCount++;
-        console.log("현재 모드:", isWorking, "세션수:", sessionCount);
-        countDisplay.innerText = sessionCount;
-        localStorage.setItem('sessionCount', sessionCount);
-        console.log("카운트 증가",sessionCount);
-    }
+function switchMode() { 
 
     isWorking = !isWorking;
 
@@ -261,13 +247,11 @@ function switchMode() {
         remainingTime = workTime;
         totalTime = workTime;
         mainTimer.style.color = workColor;
-        gauge.style.background = `conic-gradient(${workColor} 0% 100%, lightgray 100% 100%)`;
-
+        
     } else {
         remainingTime = restTime;
         totalTime = restTime;
         mainTimer.style.color = restColor;
-        gauge.style.background = `conic-gradient(${restColor} 0% 100%, lightgray 100% 100%)`;
     }
 
     updateDisplay();
